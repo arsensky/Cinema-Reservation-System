@@ -1,0 +1,13 @@
+{
+  "name": "cinema-reservation-system",
+  "version": "1.0.0",
+  "description": "Cinema Reservation System for a Database course project",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

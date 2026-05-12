@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KinoOrdo</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div>
+        <h1>KinoOrdo</h1>
+        <p class="subtitle">Browse movies, choose a hall, pick seats, and reserve tickets.</p>
+      </div>
+    </div>
+
+    <div class="auth-wrap">
+      <div id="authActions" class="auth-actions">
+        <button type="button" id="showLoginBtn" class="plain-btn">Log in</button>
+        <button type="button" id="showRegisterBtn" class="plain-btn">Sign in</button>
+        <button type="button" id="logoutBtn" class="plain-btn hidden">Logout</button>
+      </div>
+
+      <div id="authCard" class="auth-card hidden">
+        <div class="auth-card-head">
+          <strong id="authPanelTitle">Log in</strong>
+          <button type="button" id="closeAuthBtn" class="icon-btn">×</button>
+        </div>
+        <p id="authStatus" class="muted">You are browsing as a guest.</p>
+
+        <form id="loginForm" class="auth-form">
+          <input type="email" id="loginEmail" placeholder="Email" autocomplete="email" required />
+          <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password" required />
+          <button type="submit">Log in</button>
+        </form>
+
+        <form id="registerForm" class="auth-form hidden">
+          <input type="text" id="registerName" placeholder="Full name" autocomplete="name" required />
+          <input type="email" id="registerEmail" placeholder="Email" autocomplete="email" required />
+          <input type="password" id="registerPassword" placeholder="Password" autocomplete="new-password" required />
+          <button type="submit">Sign in</button>
+        </form>
+
+        <p class="hint">Demo: user@kinoordo.kg / User123 and admin@kinoordo.kg / Admin123</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="hero card">
+      <div class="hero-copy">
+          <h2>Simple booking for cinema seats.</h2>
+        <p class="hero-text">KinoOrdo is a clean cinema reservation system for browsing films, checking showtimes, and reserving seats.</p>
+        <div class="hero-actions">
+          <button id="browseBtn" type="button">Browse movies</button>
+          <button id="myBookingsBtn" type="button" class="secondary">My bookings</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout">
+      <aside class="sidebar">
+        <section class="card">
+          <div class="section-head compact">
+            <h3>Filters</h3>
+            <button id="resetFilters" class="link-btn" type="button">Reset</button>
+          </div>
+          <input id="searchInput" type="search" placeholder="Search movies..." />
+          <select id="genreFilter"><option value="all">All genres</option></select>
+        </section>
+
+        <section class="card">
+          <h3>Navigation</h3>
+          <nav class="nav-links">
+            <button type="button" data-target="moviesSection" class="nav-btn active">Movies</button>
+            <button type="button" data-target="bookingsSection" class="nav-btn">My bookings</button>
+            <button type="button" data-target="adminSection" class="nav-btn hidden" id="adminNavBtn">Admin</button>
+          </nav>
+        </section>
+
+        <section class="card">
+          <h3>How it works</h3>
+          <ol class="steps">
+            <li>Choose a movie</li>
+            <li>Select a showtime</li>
+            <li>Pick seats in the hall</li>
+            <li>Confirm the reservation</li>
+          </ol>
+        </section>
+      </aside>
+
+      <section class="content">
+        <section id="moviesSection" class="card section">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Now showing</p>
+              <h2>Movies</h2>
+            </div>
+            <div id="movieCount" class="count-badge">0 movies</div>
+          </div>
+          <div id="movieGrid" class="movie-grid"></div>
+        </section>
+
+        <section id="detailsSection" class="card section hidden">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Selected movie</p>
+              <h2 id="movieTitle">Movie title</h2>
+            </div>
+            <button id="closeDetailsBtn" class="link-btn" type="button">Close</button>
+          </div>
+          <div class="details-grid">
+            <div class="details-card">
+              <div id="movieMeta" class="meta-list"></div>
+              <p id="movieDescription" class="description"></p>
+              <div>
+                <h3>Showtimes</h3>
+                <div id="showtimesList" class="showtimes-list"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="seatSection" class="card section hidden">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Seat selection</p>
+              <h2 id="seatTitle">Choose your seats</h2>
+            </div>
+            <button id="closeSeatBtn" class="link-btn" type="button">Close</button>
+          </div>
+          <div class="seat-layout">
+            <div id="seatScreenTop" class="screen hidden">SCREEN</div>
+            <div id="seatGrid" class="seat-grid"></div>
+            <div id="seatScreenBottom" class="screen hidden">SCREEN</div>
+            <div class="seat-legend">
+              <span><i class="seat-box free"></i>Available</span>
+              <span><i class="seat-box selected"></i>Selected</span>
+              <span><i class="seat-box reserved"></i>Reserved</span>
+              <span><i class="seat-box vip"></i>VIP</span>
+            </div>
+          </div>
+          <div class="booking-summary">
+            <div>
+              <strong id="selectedSeatsLabel">No seats selected</strong>
+              <p id="selectedSeatsHint" class="muted">Pick one or more seats to continue.</p>
+            </div>
+            <button id="confirmReservationBtn" type="button">Confirm reservation</button>
+          </div>
+        </section>
+
+        <section id="bookingsSection" class="card section">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Your history</p>
+              <h2>My bookings</h2>
+            </div>
+            <div class="count-badge" id="bookingCount">0 bookings</div>
+          </div>
+          <div id="bookingList" class="stack"></div>
+        </section>
+
+        <section id="adminSection" class="card section hidden">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Administration</p>
+              <h2>Admin dashboard</h2>
+            </div>
+            <div id="adminSummary" class="count-badge">0 items</div>
+          </div>
+
+          <div class="admin-grid">
+            <form id="movieForm" class="form-card">
+              <h3>Add movie</h3>
+              <input name="title" placeholder="Title" required />
+              <textarea name="description" placeholder="Description" required></textarea>
+              <div class="two-cols">
+                <input name="genre" placeholder="Genre" required />
+                <input name="duration" type="number" min="1" placeholder="Duration (min)" required />
+              </div>
+              <div class="two-cols">
+                <input name="language" placeholder="Language" required />
+                <input name="releaseDate" type="date" required />
+              </div>
+              <div class="two-cols">
+                <input name="rating" type="number" step="0.1" min="0" max="10" placeholder="Rating" />
+                <input name="posterFile" type="file" accept="image/*" />
+              </div>
+              <button type="submit">Save movie</button>
+            </form>
+
+            <form id="posterForm" class="form-card">
+              <h3>Add poster to existing movie</h3>
+              <select id="posterMovieSelect" name="movieId" required></select>
+              <input name="posterFile" type="file" accept="image/*" required />
+              <button type="submit">Upload poster</button>
+            </form>
+
+            <form id="showtimeForm" class="form-card">
+              <h3>Add showtime</h3>
+              <select name="movieId" id="showtimeMovieSelect" required></select>
+              <select name="hallId" id="hallSelect" required></select>
+              <input name="startTime" type="datetime-local" required />
+              <input name="price" type="number" min="0" step="0.01" placeholder="Price" required />
+              <button type="submit">Save showtime</button>
+            </form>
+          </div>
+
+          <div class="admin-table-wrap">
+            <h3>All reservations</h3>
+            <div id="adminReservations" class="stack"></div>
+          </div>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Made by Arsen Zhursunov</span>
+    <span>Cinema Reservation System Project</span>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
