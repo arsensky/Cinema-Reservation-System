@@ -1,7 +1,3 @@
 node_modules/
 db/cinema.db
 .DS_Store
-screenshots/
-slides/
-README.md
-demo-script.md
