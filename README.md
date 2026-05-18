@@ -74,3 +74,8 @@ Slides are included in the repository:
 ```text
 slides/final-presentation.pdf
 ```
+
+## Demo Video
+
+* [Demo Video (YouTube)](https://youtu.be/rBoAZdMJe4E)
+* [Friend Feedback (YouTube)](https://youtu.be/Pj8s7poIhRY)
