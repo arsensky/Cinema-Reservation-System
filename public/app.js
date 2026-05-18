@@ -163,7 +163,7 @@ function renderSeatGrid() {
 
   order.forEach((rowNumber) => {
     const rowSeats = seats.filter((seat) => seat.rowNumber === rowNumber);
-    rows.push(`<div class="seat-row-wrapper"><div class="row-label">Ряд ${rowNumber}</div><div class="seat-row">${rowSeats.map((seat) => {
+    rows.push(`<div class="seat-row-wrapper"><div class="row-label">Row ${rowNumber}</div><div class="seat-row">${rowSeats.map((seat) => {
       const selected = state.selectedSeatIds.has(seat.id);
       const classes = ['seat', seat.seatType, selected ? 'selected' : '', seat.reserved ? 'reserved' : 'free'].filter(Boolean).join(' ');
       const disabled = seat.reserved ? 'disabled' : '';
