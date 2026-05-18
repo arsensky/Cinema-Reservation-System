@@ -163,18 +163,18 @@ function renderSeatGrid() {
 
   order.forEach((rowNumber) => {
     const rowSeats = seats.filter((seat) => seat.rowNumber === rowNumber);
-    rows.push(`<div class="seat-row">${rowSeats.map((seat) => {
+    rows.push(`<div class="seat-row-wrapper"><div class="row-label">Ряд ${rowNumber}</div><div class="seat-row">${rowSeats.map((seat) => {
       const selected = state.selectedSeatIds.has(seat.id);
       const classes = ['seat', seat.seatType, selected ? 'selected' : '', seat.reserved ? 'reserved' : 'free'].filter(Boolean).join(' ');
       const disabled = seat.reserved ? 'disabled' : '';
       return `<button type="button" class="${classes}" data-seat-id="${seat.id}" ${disabled}>${seat.seatNumber}</button>`;
-    }).join('')}</div>`);
+    }).join('')}</div></div>`);
   });
 
   $('seatGrid').innerHTML = rows.join('');
   $('seatScreenTop').classList.toggle('hidden', showtime.screenPosition === 'bottom');
   $('seatScreenBottom').classList.toggle('hidden', showtime.screenPosition !== 'bottom');
-  $('seatTitle').textContent = `${showtime.movieTitle} — ${showtime.hall_name}`;
+  $('seatTitle').textContent = `${showtime.movieTitle} — ${showtime.hallName}`;
 
   document.querySelectorAll('.seat:not(.reserved)').forEach((seatBtn) => {
     seatBtn.addEventListener('click', () => {

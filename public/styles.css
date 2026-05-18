@@ -322,6 +322,18 @@ h1, h2, h3, p { margin: 0; }
   vertical-align: -2px;
   margin-right: 0.35rem;
 }
+.seat-row-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.row-label {
+  min-width: 60px;
+  font-weight: bold;
+  color: #aaa;
+}
 .seat-box.free { background: #0d1c2f; }
 .seat-box.selected { background: var(--accent); }
 .seat-box.reserved { background: #41526d; }
