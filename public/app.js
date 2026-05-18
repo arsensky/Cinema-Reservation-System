@@ -174,7 +174,7 @@ function renderSeatGrid() {
   $('seatGrid').innerHTML = rows.join('');
   $('seatScreenTop').classList.toggle('hidden', showtime.screenPosition === 'bottom');
   $('seatScreenBottom').classList.toggle('hidden', showtime.screenPosition !== 'bottom');
-  $('seatTitle').textContent = `${showtime.movieTitle} — ${showtime.hallName}`;
+  $('seatTitle').textContent = `${showtime.movieTitle} — ${showtime.hall_name}`;
 
   document.querySelectorAll('.seat:not(.reserved)').forEach((seatBtn) => {
     seatBtn.addEventListener('click', () => {
@@ -191,13 +191,21 @@ function renderSeatGrid() {
 
 function updateSeatSummary() {
   const count = state.selectedSeatIds.size;
+
   if (!count) {
     $('selectedSeatsLabel').textContent = 'No seats selected';
     $('selectedSeatsHint').textContent = 'Pick one or more seats to continue.';
     return;
   }
-  $('selectedSeatsLabel').textContent = `${count} seat${count === 1 ? '' : 's'} selected`;
-  $('selectedSeatsHint').textContent = `Total: ${currency.format(count * state.seatData.showtime.price)}`;
+
+  const ticketPrice = Number(state.seatData?.showtime?.price || 0);
+  const total = count * ticketPrice;
+
+  $('selectedSeatsLabel').textContent =
+    `${count} seat${count === 1 ? '' : 's'} selected`;
+
+  $('selectedSeatsHint').textContent =
+    `Total: ${currency.format(total)}`;
 }
 
 function renderBookings() {
@@ -206,10 +214,10 @@ function renderBookings() {
     ? state.bookings.map((booking) => `
       <article class="booking-card">
         <strong>${escapeHtml(booking.title)}</strong>
-        <div>${escapeHtml(booking.hallName)}</div>
+        <div>${escapeHtml(booking.hall_name)}</div>
         <div>${escapeHtml(formatDateTime(booking.startTime))}</div>
-        <div>Seats: ${escapeHtml(booking.seatLabels)}</div>
-        <div>Total: ${currency.format(Number(booking.totalPrice))}</div>
+        <div>Seats: ${escapeHtml(booking.seat_labels)}</div>
+        <div>Total: ${currency.format(Number(booking.total_price))}</div>
         <div>Status: ${escapeHtml(booking.status)}</div>
       </article>
     `).join('')

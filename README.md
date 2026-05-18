@@ -26,7 +26,7 @@ The app ships with these 5 local movies with their local posters inside the proj
 - Node.js
 - JavaScript
 - HTML / CSS
-- SQLite
+- PostgreSQL
 
 ## Setup & Run Instructions
 1. Install Node.js 22+.

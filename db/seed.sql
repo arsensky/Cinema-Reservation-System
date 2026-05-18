@@ -1,9 +1,14 @@
+TRUNCATE reservation_seats, reservations, showtimes, seats, movies, halls, cinemas, users, app_meta
+RESTART IDENTITY CASCADE;
+
 INSERT INTO cinemas (name, address) VALUES
   ('KinoOrdo Cinema', '42 Chuy Avenue, Bishkek');
+
 INSERT INTO halls (cinema_id, hall_name, total_rows, total_columns, screen_position) VALUES
   (1, 'Hall A', 4, 6, 'top'),
   (1, 'Hall B', 4, 6, 'bottom'),
   (1, 'Main Hall', 6, 8, 'top');
+
 -- Seats for hall 1
 INSERT INTO seats (hall_id, row_number, seat_number, seat_type) VALUES
   (1,1,1,'regular'),
@@ -30,6 +35,7 @@ INSERT INTO seats (hall_id, row_number, seat_number, seat_type) VALUES
   (1,4,4,'vip'),
   (1,4,5,'vip'),
   (1,4,6,'vip');
+
 -- Seats for hall 2
 INSERT INTO seats (hall_id, row_number, seat_number, seat_type) VALUES
   (2,1,1,'regular'),
@@ -56,6 +62,7 @@ INSERT INTO seats (hall_id, row_number, seat_number, seat_type) VALUES
   (2,4,4,'vip'),
   (2,4,5,'vip'),
   (2,4,6,'vip');
+
 -- Seats for hall 3
 INSERT INTO seats (hall_id, row_number, seat_number, seat_type) VALUES
   (3,1,1,'regular'),
@@ -106,23 +113,29 @@ INSERT INTO seats (hall_id, row_number, seat_number, seat_type) VALUES
   (3,6,6,'vip'),
   (3,6,7,'vip'),
   (3,6,8,'vip');
+
 INSERT INTO movies (title, description, genre, duration, language, release_date, poster_url, rating) VALUES
   ('Illegal. Through Mexico', 'A dramatic story about survival, difficult choices, and the road through Mexico.', 'Drama', 113, 'Kyrgyz', '2026-03-19', '/uploads/posters/itm.jpg', 8),
   ('The Devil Wears Prada 2', 'A sharp drama about ambition, style, and power in the world of fashion.', 'Drama', 120, 'English', '2026-04-30', '/uploads/posters/dwp2.jpg', 7),
   ('Michael', 'A biography film about the rise, pressure, and legacy of a global icon.', 'Biography', 126, 'English', '2026-04-22', '/uploads/posters/michael.jpg', 9),
   ('Mortal Kombat II', 'A fantasy action sequel where champions face brutal new battles.', 'Fantasy', 114, 'English', '2026-05-08', '/uploads/posters/mk2.jpg', 9),
   ('Scammers', 'A tense drama about lies, money, and the people trapped in the middle.', 'Drama', 98, 'Russian', '2026-04-09', '/uploads/posters/scammers.jpg', 7);
+
 INSERT INTO showtimes (movie_id, hall_id, start_time, price, available_seats) VALUES
-  (1,1,'2026-05-20T16:30:00',3.5,24),
-  (1,2,'2026-05-20T21:00:00',5.0,24),
-  (1,1,'2026-05-21T22:30:00',6.0,24),
-  (2,1,'2026-05-20T19:00:00',5.5,24),
-  (2,3,'2026-05-21T23:00:00',7.5,48),
-  (3,3,'2026-05-20T20:30:00',7.0,48),
-  (3,3,'2026-05-21T20:30:00',7.0,48),
-  (3,3,'2026-05-22T20:30:00',7.0,48),
-  (4,2,'2026-05-20T16:30:00',6.5,24),
-  (4,1,'2026-05-20T21:00:00',8.0,24),
-  (4,2,'2026-05-21T22:30:00',7.5,24),
-  (5,2,'2026-05-20T19:00:00',4.5,24);
-INSERT INTO app_meta (key, value) VALUES ('schema_version', '5');
+  (1,1,'2026-05-20 16:30:00',3.5,24),
+  (1,2,'2026-05-20 21:00:00',5.0,24),
+  (1,1,'2026-05-21 22:30:00',6.0,24),
+  (2,1,'2026-05-20 19:00:00',5.5,24),
+  (2,3,'2026-05-21 23:00:00',7.5,48),
+  (3,3,'2026-05-20 20:30:00',7.0,48),
+  (3,3,'2026-05-21 20:30:00',7.0,48),
+  (3,3,'2026-05-22 20:30:00',7.0,48),
+  (4,2,'2026-05-20 16:30:00',6.5,24),
+  (4,1,'2026-05-20 21:00:00',8.0,24),
+  (4,2,'2026-05-21 22:30:00',7.5,24),
+  (5,2,'2026-05-20 19:00:00',4.5,24);
+
+INSERT INTO app_meta (key, value)
+VALUES ('schema_version', '5')
+ON CONFLICT (key)
+DO UPDATE SET value = EXCLUDED.value;
